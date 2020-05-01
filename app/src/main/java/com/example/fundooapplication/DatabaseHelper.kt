@@ -1,8 +1,12 @@
 package com.example.fundooapplication
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.fundooapplication.model.User
+import javax.swing.UIManager.put
+
 
 class DatabaseHelper : SQLiteOpenHelper {
     // Database version
@@ -43,6 +47,17 @@ class DatabaseHelper : SQLiteOpenHelper {
         }
         // Create tables again
         onCreate(db)
+    }
+
+    fun addUser(user: User) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(COLUMN_USER_NAME, user.getName())
+        values.put(COLUMN_USER_EMAIL, user.getEmail())
+        values.put(COLUMN_USER_PASSWORD, user.getPassword())
+        // Inserting Row
+        db.insert(TABLE_USER, null, values)
+        db.close()
     }
 
 }
