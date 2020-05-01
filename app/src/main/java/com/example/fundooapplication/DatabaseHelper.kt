@@ -31,11 +31,18 @@ class DatabaseHelper : SQLiteOpenHelper {
 
 
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (db != null) {
+            db.execSQL(CREATE_USER_TABLE)
+        }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //Drop User Table if exist
+        if (db != null) {
+            db.execSQL(DROP_USER_TABLE)
+        }
+        // Create tables again
+        onCreate(db)
     }
 
 }
