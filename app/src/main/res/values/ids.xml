@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="edittext_email" type="id" />
+    <item name="edittext_password" type="id" />
+    <item name="button_login" type="id" />
+    <item name="textview_register" type="id" />
+</resources>
