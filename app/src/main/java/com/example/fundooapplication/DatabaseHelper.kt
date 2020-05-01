@@ -1,9 +1,10 @@
 package com.example.fundooapplication
 
+import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper : SQLiteOpenHelper() {
+class DatabaseHelper : SQLiteOpenHelper {
     // Database version
     private val DATABASE_VERSION : Int = 1
     //Database name
@@ -21,6 +22,12 @@ class DatabaseHelper : SQLiteOpenHelper() {
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_NAME + " TEXT,"
             + COLUMN_USER_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
+    // drop table sql query
+    private val DROP_USER_TABLE = "DROP TABLE IF EXISTS $TABLE_USER"
+
+    fun DatabaseHelper(context: Context?) {
+        context;DATABASE_NAME;null; DATABASE_VERSION
+    }
 
 
     override fun onCreate(db: SQLiteDatabase?) {
