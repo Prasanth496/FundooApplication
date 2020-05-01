@@ -16,6 +16,11 @@ class DatabaseHelper : SQLiteOpenHelper() {
     private val COLUMN_USER_EMAIL = "user_email"
     private val COLUMN_USER_PASSWORD = "user_password"
 
+    // create table sql query
+    private val CREATE_USER_TABLE = ("CREATE TABLE " + TABLE_USER + "("
+            + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_NAME + " TEXT,"
+            + COLUMN_USER_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
+
 
 
     override fun onCreate(db: SQLiteDatabase?) {
