@@ -2,13 +2,14 @@ package com.example.fundooapplication
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.fundooapplication.model.User
 import javax.swing.UIManager.put
 
 
-class DatabaseHelper : SQLiteOpenHelper {
+class DatabaseHelper : SQLiteOpenHelper() {
     // Database version
     private val DATABASE_VERSION : Int = 1
     //Database name
@@ -59,5 +60,59 @@ class DatabaseHelper : SQLiteOpenHelper {
         db.insert(TABLE_USER, null, values)
         db.close()
     }
+
+    //checking user with only email
+    fun checkUser(email: String): Boolean {
+        // array of columns to fetch
+        val columns = arrayOf(
+            COLUMN_USER_ID
+        )
+        val db = this.readableDatabase
+        // selection criteria
+        val selection = "$COLUMN_USER_EMAIL = ?"
+        // selection argument
+        val selectionArgs = arrayOf(email)
+        val cursor: Cursor = db.query(
+            TABLE_USER,          //Table to query
+            columns,            //columns to return
+            selection,          //columns for the WHERE clause
+            selectionArgs,      //The values for the WHERE clause
+            null,      //group the rows
+            null,       //filter by row groups
+            null        //The sort order
+        )
+        val cursorCount: Int = cursor.getCount()
+        cursor.close()
+        db.close()
+        return if (cursorCount > 0) {
+            true
+        } else false
+    }
+
+    // checking user with both email and password
+    fun checkUser(email: String, password: String): Boolean {
+        // array of columns to fetch
+        val columns = arrayOf(COLUMN_USER_ID)
+        val db = this.readableDatabase
+        val selection =
+            "$COLUMN_USER_EMAIL = ? AND $COLUMN_USER_PASSWORD = ?"
+        val selectionArgs = arrayOf(email, password)
+        val cursor = db.query(
+            TABLE_USER,          //Table to query
+            columns,            //columns to return
+            selection,          //columns for the WHERE clause
+            selectionArgs,      //The values for the WHERE clause
+            null,       //group the rows
+            null,       //filter by row groups
+            null        //The sort order
+        )
+        val cursorCount = cursor.count
+        cursor.close()
+        db.close()
+        return if (cursorCount > 0) {
+            true
+        } else false
+    }
+
 
 }
